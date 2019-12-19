@@ -1,0 +1,37 @@
+{
+    "mpdrp_version": 1,
+    "seed": 555,
+    "weights": {
+        "Tallon Overworld": [
+            90,
+            0,
+            5,
+            5
+        ],
+        "Chozo Ruins": [
+            80,
+            15,
+            5,
+            0
+        ],
+        "Magmoor Caverns": [
+            50,
+            25,
+            15,
+            10
+        ],
+        "Phendrana Drifts": [
+            40,
+            20,
+            20,
+            20
+        ],
+        "Phazon Mines": [
+            0,
+            40,
+            40,
+            20
+        ]
+    },
+    "skip_frigate": true
+}
