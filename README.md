@@ -41,20 +41,31 @@ The following sections are meant for those who are interested in building the pr
 ## Build
 Although MPDR has been designed to be cross-platform, the setup and build configurations have only been documented for Windows.
 
-> Automatization of this process with CMake is on the works.
+> **NOTE:** Automatization of this process with CMake is on the works. It is not guaranteed to build correctly as documentation is not fully impkemented yet!
 
-### Windows
 Currently only Windows 10 has been tested.
 
 **NOTE:** 32-bit builds are supported, but non-functional.
 
-#### Requirements
+### Requirements
 
+* Latest version of **[CMake](https://cmake.org/download/)**.
 * **Visual Studio 2017** or 2019 with C++ support and the **Windows SDK 10.0.14393.0**.
 * **The [Rust](https://www.rust-lang.org/install.html) language:** Install the `nightly` toolchain alongside the `powerpc-unknown-linux-gnu` target, as indicated [here](https://github.com/YonicDev/randomprime/blob/master/compile_to_ppc/README.md).
 * **Libraries:** [wxWidgets](https://github.com/wxWidgets/wxWidgets) and the Door Randomizer fork of [randomprime](https://github.com/YonicDev/randomprime).
 
-#### Solution configuration
+### CMake
+Run the following commands:
+
+```bash
+$> mkdir mpdr
+$> git clone --recursive "https://github.com/YonicDev/mpdr"
+$> cd ./mkdir
+$> cmake .
+
+```
+
+### Manual configuration
 
 Apart from linking the libraries, the following configuration must be used:
 * Import properties from the **wxWidgets** library.
