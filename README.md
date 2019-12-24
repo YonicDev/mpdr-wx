@@ -55,20 +55,29 @@ Currently only Windows 10 has been tested.
 * **Libraries:** [wxWidgets](https://github.com/wxWidgets/wxWidgets) and the Door Randomizer fork of [randomprime](https://github.com/YonicDev/randomprime).
 
 ### CMake
-Run the following commands:
+Run the following commands in either cmd or PowerShell:
 
-```bash
-$> mkdir mpdr
-$> git clone --recursive "https://github.com/YonicDev/mpdr"
-$> cd ./mkdir
-$> cmake .
+```posh
+> mkdir mpdr
+> cd mpdr
+> git clone --recurse-submodules "https://github.com/YonicDev/mpdr"
+> mkdir build
+> cd build
+> cmake .. -G "Visual Studio 15 2017 Win64"
 
 ```
 
+Then open the generated MPDR solution in Visual Studio and simply Compile & Run. You may choose either Debug or Release configuration.
+
+> For Debug configuration, please follow the manual configuration as it will fail to compile without some adjustments.
+
 ### Manual configuration
+
+If the automatic configuration didn't compile, follow these instructions.
 
 Apart from linking the libraries, the following configuration must be used:
 * Import properties from the **wxWidgets** library.
+> **NOTE:** Make sure to use the Release static libraries for Debug configuration!
 * **Preprocessor definitions:** `_CRT_SECURE_NO_DEPRECATE` and `_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING`
-* In Debug builds, use **DLL Multiprocess (/MD)** as linking runtime libraries.
+* In Debug configuration, use **DLL Multiprocess (/MD)** as linking runtime libraries.
 * **Additional libraries:** `ws2_32.lib` and `userenv.lib`.
