@@ -46,7 +46,7 @@ int Randomizer::Randomize(RandomizerConfig *config, CRandomizerGUI *gui) {
 
 	const char *parsed_config = sb.GetString();
 
-	wxLogStatus("Setting up connection with randomizer...");
+	wxLogMessage("Creating patches...");
 
 	auto prime_callback = [gui](const char *data) {
 		rapidjson::Document message;
@@ -64,7 +64,7 @@ int Randomizer::Randomize(RandomizerConfig *config, CRandomizerGUI *gui) {
 		else if (strcmp(msg_type, "progress") == 0) {
 			const char *msg_contents = message["msg"].GetString();
 			const int percentage = std::floor(message["percent"].GetFloat());
-			wxLogStatus(msg_contents);
+			wxLogMessage(msg_contents);
 			gui->set_progress_percentage(percentage);
 		}
 		else if (strcmp(msg_type, "success") == 0) {

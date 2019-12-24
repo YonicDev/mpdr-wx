@@ -298,20 +298,10 @@ void CRandomizerGUI::OnRandomizerClick(wxCommandEvent &evt) {
 		trilogy_picker->GetPath().ToStdString()  // trilogy_path
 	);
 
+	wxLogMessage("Setting up connection with randomizer...");
+
 	int result = Randomizer::Randomize(config, this);
 
-
-
-	/*if (result < 0) {
-		char status_message[100];
-		sprintf(status_message, "An error has occurred. (Code: %i)", result);
-		status_label->SetLabelText(status_message);
-
-		if(result == -1) msgdialog_manager->showError("This is not a valid GameCube image file.\nPlease check the path leading to it.");
-		if(result == -2) msgdialog_manager->showError("This is a Wii image file.\nThis program does not support Metroid Prime Trilogy.");
-		if(result == -3) msgdialog_manager->showError("The game in this disc is not Metroid Prime.\nPlease use a Metroid Prime NTSC 0-00 disc image.");
-		if(result == -4) msgdialog_manager->showError("The Metroid Prime version in this disc is not compatible with this program.\nPlease use version NTSC 0-00.");
-	}*/
 	evt.Skip();
 }
 
