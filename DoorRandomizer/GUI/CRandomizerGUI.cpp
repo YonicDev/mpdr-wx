@@ -12,14 +12,14 @@
 #include "CAboutGUI.h"
 
 BEGIN_EVENT_TABLE(CRandomizerGUI, wxFrame)
-	EVT_BUTTON(1003, OnGenerateSeedClick)
-	EVT_BUTTON(1004, OnTimeSeedClick)
-	EVT_BUTTON(3001, OnRandomizerClick)
-	EVT_COLLAPSIBLEPANE_CHANGED(4000, OnCollapsePane)
-	EVT_CHECKBOX(4001, OnFixMusicClick)
-	EVT_MENU(10001, OnOpenPresetClick)
-	EVT_MENU(10002, OnSavePresetClick)
-	EVT_MENU(20002, OnAboutClick)
+    EVT_BUTTON(1003, CRandomizerGUI::OnGenerateSeedClick)
+    EVT_BUTTON(1004, CRandomizerGUI::OnTimeSeedClick)
+    EVT_BUTTON(3001, CRandomizerGUI::OnRandomizerClick)
+    EVT_COLLAPSIBLEPANE_CHANGED(4000, CRandomizerGUI::OnCollapsePane)
+    EVT_CHECKBOX(4001, CRandomizerGUI::OnFixMusicClick)
+    EVT_MENU(10001, CRandomizerGUI::OnOpenPresetClick)
+    EVT_MENU(10002, CRandomizerGUI::OnSavePresetClick)
+    EVT_MENU(20002, CRandomizerGUI::OnAboutClick)
 END_EVENT_TABLE()
 
 using namespace std;
@@ -153,9 +153,10 @@ CRandomizerGUI::CRandomizerGUI():wxFrame(nullptr,wxID_ANY,"Metroid Prime Door Ra
 	low_row->Add(status_container, 0, wxEXPAND | wxALL,5);
 	low_row->Add(progress_logbox, 1, wxEXPAND | wxALL, 5);
 
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || __APPLE__
 	// Progress indicator
 	progress_indicator = new wxAppProgressIndicator(this);
-
+    #endif
 	//Layout all rows
 	main_box->Add(top_row,0,wxEXPAND|wxALL,10);
 	main_box->Add(mid_row,0,wxEXPAND|wxALL,10);
@@ -383,15 +384,20 @@ bool CFilePickerTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString &f
 
 void CRandomizerGUI::set_progress_waiting() {
 	progress_bar->Pulse();
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || __APPLE__
 	progress_indicator->Pulse();
+#endif
 }
+
 
 void CRandomizerGUI::set_randomizer_status(bool status) {
 	button_randomize->Enable(status);
 }
 
 void CRandomizerGUI::reset_progress(bool also_gauge) {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || __APPLE__
 	progress_indicator->Reset();
+#endif
 	if (also_gauge) { progress_bar->SetValue(0); }
 }
 
@@ -399,5 +405,7 @@ void CRandomizerGUI::set_progress_percentage(int percentage) {
 	if (percentage <= 0) { percentage = 0; }
 	else if (percentage >= progress_bar->GetRange()) { percentage = progress_bar->GetRange(); }
 	progress_bar->SetValue(percentage);
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || __APPLE__
 	progress_indicator->SetValue(percentage);
+    #endif
 }

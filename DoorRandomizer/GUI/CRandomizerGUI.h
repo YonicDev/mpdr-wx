@@ -5,8 +5,9 @@
 #include <wx/dnd.h>
 #include <wx/collpane.h>
 #include <wx/spinctrl.h>
+#ifdef WIN32
 #include <wx/appprogress.h>
-
+#endif
 #include "Log.h"
 #include "../Core/Randomizer.h"
 #include "CDialogsGUI.h"
@@ -79,8 +80,9 @@ private:
 	wxGauge *progress_bar = nullptr;
 	wxStaticText *status_label = nullptr;
 	wxListCtrl *progress_logbox = nullptr;
+    #ifdef WIN32
 	wxAppProgressIndicator *progress_indicator = nullptr;
-
+    #endif
 	CLogger *logger_target = nullptr;
 
 	const char* area_names[5] = {

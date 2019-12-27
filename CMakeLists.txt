@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.5)
 
 # set the project name
 project(MPDR VERSION 0.1)
@@ -49,14 +49,22 @@ ExternalProject_Add(
 add_dependencies(MPDR randomprime)
 
 # compiler definitions
-add_definitions(-D_CRT_SECURE_NO_WARNINGS=1,_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING=1)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /MD")
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS=1,_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING=1)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /MD")
+endif()
 
 # library linkage
 set(RANDOMPRIME_LIB $<IF:$<CONFIG:Debug>,debug,release>)
-target_link_libraries(MPDR
-    "${CMAKE_SOURCE_DIR}/randomprime/target/${RANDOMPRIME_LIB}/randomprime.lib"
-    ws2_32 userenv advapi32 ${wxWidgets_LIBRARIES})
+if(MSVC)
+    target_link_libraries(MPDR
+        "${CMAKE_SOURCE_DIR}/randomprime/target/${RANDOMPRIME_LIB}/randomprime.lib"
+        ws2_32 userenv advapi32 ${wxWidgets_LIBRARIES})
+elseif(UNIX)
+    target_link_libraries(MPDR
+        "${CMAKE_SOURCE_DIR}/randomprime/target/${RANDOMPRIME_LIB}/librandomprime.a"
+        libdl.so X11 ${wxWidgets_LIBRARIES})
+endif()
 #target_link_libraries(MPDR randomprime ws2_32 userenv ${wxWidgets_LIBRARIES})
 target_include_directories(MPDR PUBLIC "${CMAKE_SOURCE_DIR}/include/rapidjson/include" PRIVATE ${MPDR_DIRS})
